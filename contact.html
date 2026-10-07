@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontak — N2E Dev</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* =========================
+           CONTACT PAGE ENHANCED
+        ===================================================== */
+        
+        .contact-page {
+            min-height: 100vh;
+            /* Padding atas dikurangi agar keseluruhan elemen sedikit naik */
+            padding: 130px max(6%, calc((100% - 1200px) / 2)) 100px;
+            display: flex;
+            align-items: flex-start; /* Ubah dari center ke flex-start agar nempel di atas */
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Glow Background */
+        .contact-page::before {
+            content: "";
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            top: 5%; /* Glow dinaikkan sedikit */
+            left: 50%;
+            transform: translateX(-50%);
+            background: radial-gradient(circle, rgba(0, 217, 255, 0.08) 0%, transparent 60%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .contact-container {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1.1fr;
+            gap: 80px;
+            align-items: flex-start; /* Supaya kiri dan kanan sejajar dari atas */
+            margin-top: 20px; /* Jarak tambahan sedikit dari navbar */
+        }
+
+        /* =========================
+           CONTACT INTRO (KIRI)
+        ===================================================== */
+        
+        .contact-intro {
+            max-width: 550px;
+            margin-top: 15px; /* Menyesuaikan agar teks sejajar manis dengan peta */
+        }
+
+        .contact-intro h1 {
+            font-size: clamp(45px, 5.5vw, 70px);
+            line-height: 1.05;
+            letter-spacing: -2px;
+            margin-bottom: 25px;
+        }
+
+        .contact-intro h1 span {
+            color: transparent;
+            -webkit-text-stroke: 1.5px #00d9ff;
+            position: relative;
+        }
+
+        .contact-intro h1 span::after {
+            content: "Website?";
+            position: absolute;
+            left: 0; top: 0;
+            color: #00d9ff;
+            filter: blur(12px);
+            opacity: 0.5;
+            z-index: -1;
+        }
+
+        .contact-intro > p {
+            color: #a0abbc;
+            font-size: 17px;
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Diubah menjadi elemen Link <a> agar bisa diklik */
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px 25px;
+            background: rgba(16, 21, 30, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            transition: all 0.3s ease;
+            text-decoration: none; /* Menghilangkan garis bawah link */
+            color: inherit;
+            cursor: pointer; /* Kursor berubah jadi tangan */
+        }
+
+        .contact-item:hover {
+            border-color: rgba(0, 217, 255, 0.4);
+            background: rgba(16, 21, 30, 0.8);
+            transform: translateX(8px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 217, 255, 0.05);
+            border: 1px solid rgba(0, 217, 255, 0.2);
+            border-radius: 12px;
+            color: #00d9ff;
+            flex-shrink: 0;
+            transition: 0.3s;
+        }
+
+        .contact-item:hover .contact-icon {
+            background: #00d9ff;
+            color: #080b12;
+        }
+
+        .contact-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        .contact-item h3 {
+            font-size: 16px;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .contact-item p {
+            color: #8f99a9;
+            font-size: 14px;
+        }
+
+        /* =========================
+           CONTACT CARD & MAP (KANAN)
+        ===================================================== */
+        
+        .contact-card {
+            padding: 10px;
+            background: rgba(16, 21, 30, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        .map-wrapper {
+            width: 100%;
+            height: 300px;
+            border-radius: 18px;
+            overflow: hidden;
+            position: relative;
+            background: #0b0f17;
+        }
+
+        .map-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            filter: invert(90%) hue-rotate(180deg) brightness(95%) contrast(85%);
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        
+        .map-wrapper:hover iframe {
+            opacity: 1;
+        }
+
+        .card-content {
+            padding: 35px 30px;
+            text-align: center;
+        }
+
+        .card-content h2 {
+            font-size: 28px;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .card-content > p {
+            color: #8f99a9;
+            font-size: 15px;
+            margin-bottom: 30px;
+            line-height: 1.7;
+        }
+
+        .contact-buttons-page {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .contact-buttons-page .btn-primary,
+        .contact-buttons-page .btn-secondary {
+            width: 100%;
+            text-align: center;
+            justify-content: center;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ===================================================== */
+        
+        @media (max-width: 1024px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+            .contact-intro {
+                max-width: 700px;
+                text-align: center;
+                margin: 0 auto;
+            }
+            .contact-intro > p { margin: 0 auto 40px; }
+            .contact-item { text-align: left; }
+        }
+
+        @media (max-width: 768px) {
+            .contact-page { padding: 120px 6% 60px; }
+            .map-wrapper { height: 250px; }
+            .card-content { padding: 25px 20px; }
+            .contact-intro h1 { font-size: 40px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <header>
+        <nav class="navbar">
+            <a href="index.html" class="logo">
+                <img src="images/logo.png" alt="N2E Dev">
+            </a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#layanan">Layanan</a></li>
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="index.html#tentang">Tentang</a></li>
+                <li><a href="contact.html" style="color: #00d9ff;">Kontak</a></li>
+            </ul>
+            <button class="menu-toggle" id="menuToggle" aria-label="Buka menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- CONTACT MAIN -->
+    <main>
+        <section class="contact-page">
+            <div class="contact-container">
+
+                <!-- KIRI: TEKS & INFO -->
+                <div class="contact-intro">
+                    <p class="small-title">LET'S WORK TOGETHER</p>
+                    <h1>Punya Ide <span>Website?</span></h1>
+                    <p>
+                        Ceritakan kebutuhan dan konsep project yang ingin kamu kembangkan. N2E Dev siap membantu mengembangkan website dan sistem informasi berbasis web sesuai kebutuhan.
+                    </p>
+
+                    <div class="contact-info">
+                        <!-- Email Item -->
+                        <a href="mailto:halo@n2edev.com" class="contact-item">
+                            <div class="contact-icon">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3>Email</h3>
+                                <p>halo@n2edev.com</p>
+                            </div>
+                        </a>
+
+                        <!-- Instagram Item -->
+                        <a href="https://instagram.com/n2edev" target="_blank" rel="noopener noreferrer" class="contact-item">
+                            <div class="contact-icon">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3>Instagram</h3>
+                                <p>@n2edev</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- KANAN: KARTU PETA & CTA -->
+                <div class="contact-card">
+                    <div class="map-wrapper">
+                        <!-- Menggunakan koordinat umum Tangerang Selatan/Pamulang, bisa diganti sesuai titik presisi -->
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126907.08114092822!2d106.6666!3d-6.33145!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69e4f553a71b1d%3A0x401576d14fed700!2sTangerang%20Selatan%2C%20Banten!5e0!3m2!1sen!2sid!4v1700000000000!5m2!1sen!2sid" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+
+                    <div class="card-content">
+                        <h2>Mulai Konsultasi</h2>
+                        <p>
+                            Hubungi N2E Dev untuk membicarakan kebutuhan website atau sistem informasi yang ingin dikembangkan.
+                        </p>
+
+                        <div class="contact-buttons-page">
+                            <a href="https://wa.me/6285743997608?text=Halo%20N2E%20Dev,%20saya%20ingin%20konsultasi%20proyek%20TA%20berbasis%20web."
+                               target="_blank" rel="noopener noreferrer" class="btn-primary whatsapp-btn">
+                                <svg class="whatsapp-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M20.5 3.5A11.8 11.8 0 0 0 12.1 0C5.6 0 .3 5.3.3 11.8c0 2.1.5 4.2 1.6 6L.2 24l6.4-1.7a11.8 11.8 0 0 0 5.5 1.4h.1c6.5 0 11.8-5.3 11.8-11.8 0-3.2-1.2-6.1-3.5-8.4ZM12.2 21.6h-.1c-1.7 0-3.4-.5-4.9-1.3l-.4-.2-3.8 1 1-3.7-.2-.4a9.8 9.8 0 0 1-1.5-5.2c0-5.4 4.4-9.8 9.9-9.8 2.6 0 5.1 1 6.9 2.9 1.9 1.8 2.9 4.3 2.9 6.9 0 5.4-4.4 9.8-9.8 9.8Zm5.4-7.3c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-1.5-.7-2.5-1.3-3.5-2.9-.3-.5.3-.5.8-1.7.1-.2.1-.4 0-.6-.1-.2-.7-1.7-.9-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.8.4-.3.3-1 1-1 2.5s1 2.9 1.1 3.1c.1.2 2 3.1 4.8 4.3.7.3 1.3.5 1.7.6.6-.1 1.8-.7 2.1-1.4.3-.7.3-1.3.2-1.4-.1-.2-.3-.3-.6-.4Z"/>
+                                </svg>
+                                Konsultasi via WhatsApp
+                            </a>
+                            
+                            <!-- Buka langsung ke aplikasi Google Maps -->
+                            <a href="https://maps.app.goo.gl/bwNSaMpzcW4UpnkL8"
+                               target="_blank" rel="noopener noreferrer" class="btn-secondary">
+                                Buka di Google Maps
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-logo">
+            <img src="images/logo.png" alt="N2E Dev">
+        </div>
+        <p>© 2026 N2E Dev. All Rights Reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

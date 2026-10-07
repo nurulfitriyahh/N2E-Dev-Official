@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Portfolio — N2E Dev</title>
+
+    <!-- CSS UTAMA -->
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* =====================================================
+           PORTFOLIO PAGE - ENHANCED
+        ===================================================== */
+
+        .portfolio-page {
+            background: #080b12;
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Menambahkan Pattern Grid di Background agar tidak terlalu kosong */
+        .portfolio-page::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 60px 60px; /* Ukuran kotak grid */
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* =====================================================
+           INTRO
+        ===================================================== */
+
+        .portfolio-intro {
+            min-height: 85vh; /* Sedikit diperbesar */
+            display: flex;
+            align-items: center; /* Diubah ke center agar mengisi ruang vertikal */
+            padding: 100px max(6%, calc((100% - 1280px) / 2)) 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Glow Effect Biru di Belakang Judul */
+        .portfolio-intro::before {
+            content: "";
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            top: 20%;
+            left: 20%;
+            background: radial-gradient(circle, rgba(0, 217, 255, 0.12) 0%, transparent 60%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .portfolio-intro-content {
+            max-width: 1000px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .portfolio-kicker {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            color: #00d9ff;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .portfolio-kicker::before {
+            content: "";
+            width: 40px;
+            height: 2px;
+            background: #00d9ff;
+            box-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
+        }
+
+        .portfolio-intro h1 {
+            margin: 0;
+            font-size: clamp(60px, 9vw, 130px);
+            line-height: 0.95;
+            letter-spacing: -4px;
+            font-weight: 700;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .portfolio-intro h1 span {
+            color: transparent;
+            -webkit-text-stroke: 2px #00d9ff; /* Efek outline text */
+            position: relative;
+        }
+
+        /* Glow di dalam text span */
+        .portfolio-intro h1 span::after {
+            content: 'purpose.';
+            position: absolute;
+            left: 0; top: 0;
+            color: #00d9ff;
+            filter: blur(15px);
+            opacity: 0.5;
+            z-index: -1;
+        }
+
+        .portfolio-intro-text {
+            max-width: 600px;
+            margin-top: 45px;
+            color: #a0abbc;
+            font-size: 18px;
+            line-height: 1.8;
+        }
+
+        .portfolio-scroll-hint {
+            margin-top: 70px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #7f8a9e;
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .scroll-line {
+            width: 70px;
+            height: 1px;
+            background: #414b5c;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Animasi garis scroll */
+        .scroll-line::after {
+            content: "";
+            position: absolute;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: #00d9ff;
+            animation: scrollLine 2s infinite ease-in-out;
+        }
+        @keyframes scrollLine {
+            0% { left: -100%; }
+            50% { left: 0%; }
+            100% { left: 100%; }
+        }
+
+        /* =====================================================
+           WORK SECTION
+        ===================================================== */
+
+        .portfolio-work {
+            position: relative;
+            height: 100vh;
+            z-index: 1;
+        }
+
+        .portfolio-work-inner {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 max(6%, calc((100% - 1350px) / 2)); /* Area grid dilebarkan */
+        }
+
+        /* =====================================================
+           PROJECT NUMBER (DIBUAT RAKSASA UNTUK MENGISI BACKGROUND KOSONG)
+        ===================================================== */
+
+        .project-number {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: clamp(200px, 35vw, 500px);
+            font-weight: 800;
+            line-height: 0.8;
+            color: rgba(255, 255, 255, 0.02);
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.05);
+            pointer-events: none;
+            user-select: none;
+            z-index: 0;
+        }
+
+        /* =====================================================
+           PROJECT GRID
+        ===================================================== */
+
+        .project-stage {
+            width: 100%;
+            display: grid;
+            /* Rasio grid disesuaikan agar gambar lebih dominan dan ruang kosong berkurang */
+            grid-template-columns: minmax(0, 1.4fr) minmax(420px, 0.9fr);
+            gap: clamp(50px, 8vw, 130px);
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* =====================================================
+           PROJECT IMAGE
+        ===================================================== */
+
+        .project-image-wrap {
+            position: relative;
+            aspect-ratio: 16 / 10;
+            overflow: hidden;
+            background: #10151e;
+            border-radius: 24px; /* Sudut membulat */
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 
+                0 30px 60px rgba(0,0,0,0.6), 
+                0 0 40px rgba(0, 217, 255, 0.08); /* Glow bayangan */
+        }
+
+        .project-image-wrap::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0,217,255,0.1), transparent 50%);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .project-image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transform: scale(1.08);
+            transition: opacity 0.4s ease, transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .project-image.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .project-image-label {
+            position: absolute;
+            left: 24px;
+            bottom: 24px;
+            z-index: 5;
+            padding: 10px 16px;
+            background: rgba(8,11,18,0.7);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 30px; /* Label membulat */
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            color: #fff;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* =====================================================
+           PROJECT INFO
+        ===================================================== */
+
+        .project-info {
+            min-width: 0;
+            background: rgba(16, 21, 30, 0.4);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .project-meta {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            color: #00d9ff;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .project-meta-line {
+            flex-grow: 1; /* Garis memanjang mengisi kekosongan */
+            height: 1px;
+            background: linear-gradient(90deg, #00d9ff, transparent);
+        }
+
+        .project-title {
+            margin: 0;
+            font-size: clamp(40px, 4.5vw, 65px);
+            line-height: 1;
+            letter-spacing: -2px;
+            font-weight: 700;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        .project-description {
+            max-width: 100%;
+            margin-top: 25px;
+            color: #a0abbc;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .project-tag {
+            padding: 8px 14px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 6px;
+            color: #bac4d4;
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* =====================================================
+           PROJECT COUNTER
+        ===================================================== */
+
+        .project-counter {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 45px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .project-counter-current {
+            color: #00d9ff;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .project-counter-line {
+            width: 100px;
+            height: 1px;
+            background: #303846;
+        }
+
+        .project-counter-total {
+            color: #697382;
+            font-size: 14px;
+        }
+
+        /* =====================================================
+           NEXT INDICATOR
+        ===================================================== */
+
+        .project-next {
+            position: absolute;
+            right: max(4%, calc((100% - 1350px) / 2));
+            bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            color: #687382;
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .project-next-arrow {
+            font-size: 20px;
+            color: #00d9ff;
+            animation: bounce 2s infinite ease-in-out;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(8px); }
+        }
+
+        /* =====================================================
+           CTA SECTION
+        ===================================================== */
+
+        .portfolio-cta-section {
+            padding: 160px max(6%, calc((100% - 1280px) / 2)) 150px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .portfolio-cta-box {
+            position: relative;
+            overflow: hidden;
+            padding: clamp(60px, 8vw, 120px) clamp(40px, 7vw, 100px);
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.05);
+            background: linear-gradient(135deg, rgba(16, 21, 30, 0.8) 0%, rgba(8, 11, 18, 0.9) 100%);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            text-align: center; /* Teks dibuat ke tengah agar mengisi kekosongan box */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Glow di dalam CTA Box */
+        .portfolio-cta-box::before {
+            content: "";
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%; height: 80%;
+            background: radial-gradient(ellipse, rgba(0, 217, 255, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .portfolio-cta-box::after {
+            content: "N2E";
+            position: absolute;
+            right: -20px;
+            bottom: -60px;
+            font-size: 250px;
+            font-weight: 800;
+            color: rgba(255,255,255,0.02);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .cta-kicker, .portfolio-cta-box h2, .portfolio-cta-box p, .cta-button {
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-kicker {
+            color: #00d9ff;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .portfolio-cta-box h2 {
+            max-width: 900px;
+            margin: 25px 0 25px;
+            font-size: clamp(45px, 6vw, 90px);
+            line-height: 1.05;
+            letter-spacing: -3px;
+        }
+
+        .portfolio-cta-box p {
+            max-width: 600px;
+            margin-bottom: 45px;
+            color: #a0abbc;
+            font-size: 17px;
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            padding: 16px 30px;
+            background: #00d9ff;
+            color: #080b12;
+            font-size: 13px;
+            font-weight: 700;
+            border-radius: 50px; /* Tombol membulat */
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 217, 255, 0.3);
+            background: #fff;
+        }
+
+        .cta-arrow {
+            font-size: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .cta-button:hover .cta-arrow {
+            transform: translate(3px, -3px);
+        }
+
+        /* =====================================================
+           MOBILE & TABLET RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1024px) {
+            .project-stage {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .portfolio-work-inner {
+                padding: 120px max(6%, calc((100% - 1350px) / 2)) 0; /* Ubah jarak untuk mobile */
+                align-items: flex-start; /* Supaya konten tidak kepotong di hp */
+            }
+
+            .project-info {
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .portfolio-intro {
+                min-height: 70vh;
+                padding: 130px 6% 60px;
+            }
+
+            .portfolio-intro h1 span {
+                -webkit-text-stroke: 1px #00d9ff;
+            }
+
+            .portfolio-work {
+                height: 100svh; /* Menggunakan ukuran layar asli HP */
+            }
+
+            .portfolio-work-inner {
+                height: 100svh;
+                padding: 100px 6% 40px;
+            }
+
+            .project-number {
+                font-size: 150px;
+                top: 15%;
+                left: -5%;
+            }
+
+            .project-title {
+                font-size: 34px;
+            }
+
+            .project-description {
+                font-size: 14px;
+                margin-top: 15px;
+            }
+
+            .project-info {
+                padding: 20px;
+            }
+
+            .project-tags {
+                margin-top: 15px;
+            }
+
+            .project-counter {
+                margin-top: 25px;
+                padding-top: 15px;
+            }
+
+            .project-next {
+                display: none;
+            }
+
+            .portfolio-cta-box {
+                padding: 60px 30px;
+            }
+
+            .portfolio-cta-box h2 {
+                font-size: 40px;
+            }
+            
+            .cta-button {
+                padding: 14px 25px;
+                font-size: 12px;
+            }
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         HEADER
+    ===================================================== -->
+
+    <header>
+
+        <nav class="navbar">
+
+            <a href="index.html" class="logo">
+                <img src="images/logo.png" alt="N2E Dev">
+            </a>
+
+
+            <!-- MOBILE MENU -->
+
+            <button
+                class="menu-toggle"
+                id="menuToggle"
+                aria-label="Buka menu">
+
+                <span></span>
+                <span></span>
+                <span></span>
+
+            </button>
+
+
+            <ul class="nav-menu" id="navMenu">
+
+                <li>
+                    <a href="index.html">
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a href="index.html#layanan">
+                        Layanan
+                    </a>
+                </li>
+
+                <li>
+                    <a href="portfolio.html" class="active">
+                        Portfolio
+                    </a>
+                </li>
+
+                <li>
+                    <a href="index.html#tentang">
+                        Tentang
+                    </a>
+                </li>
+
+                <li>
+                    <a href="index.html#kontak">
+                        Kontak
+                    </a>
+                </li>
+
+            </ul>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         INTRO
+    ===================================================== -->
+
+    <main class="portfolio-page">
+
+        <section class="portfolio-intro">
+
+            <div class="portfolio-intro-content">
+
+                <div class="portfolio-kicker">
+                    N2E DEV — SELECTED WORK
+                </div>
+
+
+                <h1>
+
+                    Digital projects
+                    <br>
+
+                    built with
+                    <span>purpose.</span>
+
+                </h1>
+
+
+                <p class="portfolio-intro-text">
+
+                    Eksplorasi contoh website, sistem informasi,
+                    dan dashboard berbasis web yang dirancang
+                    untuk kebutuhan digital yang berbeda.
+
+                </p>
+
+
+                <div class="portfolio-scroll-hint">
+
+                    <span class="scroll-line"></span>
+
+                    Scroll to explore
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             PROJECT SHOWCASE
+        ================================================= -->
+
+        <section class="portfolio-work" id="projects">
+
+            <div class="portfolio-work-inner">
+
+                <div
+                    class="project-number"
+                    id="projectNumber">
+
+                    01
+
+                </div>
+
+
+                <div class="project-stage">
+
+
+                    <!-- IMAGE -->
+
+                    <div class="project-image-wrap">
+
+                        <img
+                            class="project-image active"
+                            src="images/portfolio1.jpg"
+                            alt="Academic Management System">
+
+                        <img
+                            class="project-image"
+                            src="images/portfolio2.jpg"
+                            alt="Library Management System">
+
+                        <img
+                            class="project-image"
+                            src="images/portfolio3.jpg"
+                            alt="School Information System">
+
+                        <img
+                            class="project-image"
+                            src="images/portfolio4.jpg"
+                            alt="Business Company Profile">
+
+                        <img
+                            class="project-image"
+                            src="images/portfolio5.jpg"
+                            alt="Inventory Management System">
+
+                        <img
+                            class="project-image"
+                            src="images/portfolio6.jpg"
+                            alt="Data Analytics Dashboard">
+
+                        <img
+                            class="project-image"
+                            src="images/portfolio7.jpg"
+                            alt="UMKM Business Website">
+
+                        <img
+                            class="project-image"
+                            src="images/portfolio8.jpg"
+                            alt="Clinic Management System">
+
+                        <img
+                            class="project-image"
+                            src="images/portfolio9.jpg"
+                            alt="Management Dashboard">
+
+
+                        <div class="project-image-label">
+                            Demo Project / Concept
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- INFO -->
+
+                    <div class="project-info">
+
+                        <div class="project-meta">
+
+                            <span id="projectCategory">
+                                SISTEM INFORMASI
+                            </span>
+
+                            <span class="project-meta-line"></span>
+
+                        </div>
+
+
+                        <h2
+                            class="project-title"
+                            id="projectTitle">
+
+                            Academic
+                            Management
+                            System
+
+                        </h2>
+
+
+                        <p
+                            class="project-description"
+                            id="projectDescription">
+
+                            Sistem berbasis web untuk membantu
+                            pengelolaan data akademik secara
+                            terstruktur dan terpusat.
+
+                        </p>
+
+
+                        <div
+                            class="project-tags"
+                            id="projectTags">
+
+                            <span class="project-tag">
+                                Web Application
+                            </span>
+
+                            <span class="project-tag">
+                                Responsive
+                            </span>
+
+                            <span class="project-tag">
+                                Management
+                            </span>
+
+                        </div>
+
+
+                        <div class="project-counter">
+
+                            <span
+                                class="project-counter-current"
+                                id="projectCounter">
+
+                                01
+
+                            </span>
+
+                            <span class="project-counter-line"></span>
+
+                            <span class="project-counter-total">
+                                09
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="project-next">
+
+                    Scroll
+
+                    <span class="project-next-arrow">
+                        ↓
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             CTA
+        ================================================= -->
+
+        <section class="portfolio-cta-section">
+
+            <div class="portfolio-cta-box">
+
+                <div class="cta-kicker">
+                    HAVE AN IDEA?
+                </div>
+
+
+                <h2>
+
+                    Let's build something
+                    <br>
+                    worth using.
+
+                </h2>
+
+
+                <p>
+
+                    Punya ide website atau sistem informasi
+                    berbasis web? Diskusikan kebutuhan project
+                    kamu bersama N2E Dev.
+
+                </p>
+
+
+                <a
+                    href="https://wa.me/6285743997608?text=Halo%20N2E%20Dev,%20saya%20ingin%20konsultasi%20proyek%20TA%20berbasis%20web."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="cta-button">
+
+                    Start a Project
+
+                    <span class="cta-arrow">
+                        ↗
+                    </span>
+
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ===================================================== -->
+
+    <footer>
+
+        <div class="footer-logo">
+
+            <img
+                src="images/logo.png"
+                alt="N2E Dev">
+
+        </div>
+
+        <p>
+            © 2026 N2E Dev. All Rights Reserved.
+        </p>
+
+    </footer>
+
+
+
+   <script>
+    const projects = [
+        {
+            number: "01",
+            title: "Academic Management System",
+            category: "Sistem Informasi",
+            description: "Sistem informasi akademik berbasis web untuk membantu pengelolaan data mahasiswa, akademik, dan informasi kampus.",
+            image: "images/portfolio1.jpg"
+        },
+        {
+            number: "02",
+            title: "Library Management System",
+            category: "Sistem Informasi",
+            description: "Website pengelolaan perpustakaan dengan fitur data buku, anggota, peminjaman, dan pengembalian.",
+            image: "images/portfolio2.jpg"
+        },
+        {
+            number: "03",
+            title: "School Information System",
+            category: "Sistem Informasi",
+            description: "Sistem informasi sekolah untuk mengelola data siswa, guru, kelas, dan informasi sekolah.",
+            image: "images/portfolio3.jpg"
+        },
+        {
+            number: "04",
+            title: "Business Company Profile",
+            category: "Website",
+            description: "Website company profile modern untuk memperkenalkan bisnis, layanan, dan identitas perusahaan.",
+            image: "images/portfolio4.jpg"
+        },
+        {
+            number: "05",
+            title: "Inventory Management System",
+            category: "Sistem Informasi",
+            description: "Sistem pengelolaan inventori untuk membantu pencatatan stok dan monitoring barang.",
+            image: "images/portfolio5.jpg"
+        },
+        {
+            number: "06",
+            title: "Data Analytics Dashboard",
+            category: "Dashboard",
+            description: "Dashboard visualisasi data untuk menampilkan informasi secara ringkas dan mudah dipahami.",
+            image: "images/portfolio6.jpg"
+        },
+        {
+            number: "07",
+            title: "UMKM Business Website",
+            category: "Website",
+            description: "Website bisnis sederhana dan modern untuk membantu UMKM memperkenalkan produk dan layanan.",
+            image: "images/portfolio7.jpg"
+        },
+        {
+            number: "08",
+            title: "Clinic Management System",
+            category: "Sistem Informasi",
+            description: "Sistem informasi klinik untuk membantu pengelolaan pasien, jadwal, dan data layanan.",
+            image: "images/portfolio8.jpg"
+        },
+        {
+            number: "09",
+            title: "Management Dashboard",
+            category: "Dashboard",
+            description: "Dashboard management untuk menampilkan berbagai informasi dan data operasional.",
+            image: "images/portfolio9.jpg"
+        }
+    ];
+
+    let current = 0;
+    let changing = false;
+
+    const images = document.querySelectorAll(".project-image");
+    const number = document.getElementById("projectNumber");
+    const title = document.getElementById("projectTitle");
+    const category = document.getElementById("projectCategory");
+    const description = document.getElementById("projectDescription");
+    const counter = document.getElementById("projectCounter");
+
+    function showProject(index) {
+        if (index < 0 || index >= projects.length) return;
+
+        current = index;
+        const project = projects[current];
+
+        // Ganti gambar
+        images.forEach(img => img.classList.remove("active"));
+        if (images[current]) {
+            images[current].classList.add("active");
+        }
+
+        // Ganti teks
+        number.textContent = project.number;
+        title.textContent = project.title;
+        category.textContent = project.category;
+        description.textContent = project.description;
+        counter.textContent = String(current + 1).padStart(2, "0") + " / " + String(projects.length).padStart(2, "0");
+    }
+
+    // Fungsi untuk mengecek apakah kita sedang berada di area Portfolio
+    function isSectionVisible() {
+        const section = document.querySelector(".portfolio-work");
+        if (!section) return false;
+        const rect = section.getBoundingClientRect();
+        // Beri kelonggaran 100px agar sistem tidak sensitif kalau halaman tergeser sedikit
+        return rect.top <= 100 && rect.top >= -100;
+    }
+
+    /* =========================
+       DESKTOP SCROLL (WHEEL)
+    ========================= */
+    window.addEventListener("wheel", function (e) {
+        if (!isSectionVisible()) return;
+
+        // Jika di gambar terakhir dan scroll ke bawah, lepas kunci halaman agar bisa melihat footer
+        if (e.deltaY > 0 && current === projects.length - 1) return;
+        
+        // Jika di gambar pertama dan scroll ke atas, lepas kunci halaman agar bisa naik ke atas
+        if (e.deltaY < 0 && current === 0) return;
+
+        // KUNCI HALAMAN: Cegah halaman web ikut scroll selama kita di tengah-tengah carousel
+        e.preventDefault();
+
+        // Cegah spam ganti gambar saat trackpad/mouse scroll terlalu cepat
+        if (changing) return;
+
+        if (e.deltaY > 0) { // Scroll Bawah
+            changing = true;
+            showProject(current + 1);
+            setTimeout(() => { changing = false; }, 800); 
+        } else if (e.deltaY < 0) { // Scroll Atas
+            changing = true;
+            showProject(current - 1);
+            setTimeout(() => { changing = false; }, 800);
+        }
+    }, { passive: false });
+
+
+    /* =========================
+       TOUCH / HP SCROLL
+    ========================= */
+    let touchStartY = 0;
+
+    window.addEventListener("touchstart", function (e) {
+        touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    // Saat jari menggeser layar di HP, kunci juga halamannya agar tidak bocor
+    window.addEventListener("touchmove", function (e) {
+        if (!isSectionVisible()) return;
+
+        const touchCurrentY = e.touches[0].clientY;
+        const difference = touchStartY - touchCurrentY;
+
+        if (difference > 0 && current === projects.length - 1) return;
+        if (difference < 0 && current === 0) return;
+
+        e.preventDefault();
+    }, { passive: false });
+
+    window.addEventListener("touchend", function (e) {
+        if (!isSectionVisible() || changing) return;
+
+        const touchEndY = e.changedTouches[0].clientY;
+        const difference = touchStartY - touchEndY;
+
+        if (Math.abs(difference) < 40) return; // Jarak swipe terlalu pendek
+
+        if (difference > 0) { // Swipe atas (scroll ke bawah)
+            if (current < projects.length - 1) {
+                changing = true;
+                showProject(current + 1);
+                setTimeout(() => { changing = false; }, 600);
+            }
+        } else { // Swipe bawah (scroll ke atas)
+            if (current > 0) {
+                changing = true;
+                showProject(current - 1);
+                setTimeout(() => { changing = false; }, 600);
+            }
+        }
+    });
+
+    /* Tampilkan project pertama saat web dibuka */
+    showProject(0);
+    </script>
+
+</body>
+
+</html>

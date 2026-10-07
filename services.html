@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Layanan — N2E Dev</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* =========================
+           SERVICES PAGE ENHANCED WITH ANIMATIONS
+        ===================================================== */
+
+        .services-page {
+            min-height: 100vh;
+            padding: 150px max(6%, calc((100% - 1200px) / 2)) 100px;
+            background:
+                radial-gradient(circle at 10% 15%, rgba(0, 217, 255, 0.08), transparent 40%),
+                radial-gradient(circle at 90% 85%, rgba(0, 217, 255, 0.05), transparent 40%);
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .services-container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        /* =========================
+           PAGE INTRO WITH FADE-IN
+        ===================================================== */
+
+        .services-intro {
+            max-width: 800px;
+            margin-bottom: 70px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .services-intro h1 {
+            font-size: clamp(45px, 6vw, 72px);
+            line-height: 1.05;
+            letter-spacing: -2px;
+            margin-bottom: 25px;
+        }
+
+        .services-intro h1 span {
+            color: transparent;
+            -webkit-text-stroke: 1.5px #00d9ff;
+            position: relative;
+        }
+
+        .services-intro h1 span::after {
+            content: "untuk Kebutuhanmu";
+            position: absolute;
+            left: 0; top: 0;
+            color: #00d9ff;
+            filter: blur(12px);
+            opacity: 0.5;
+            z-index: -1;
+        }
+
+        .services-intro > p:not(.small-title) {
+            color: #a0abbc;
+            font-size: 18px;
+            line-height: 1.8;
+            max-width: 700px;
+        }
+
+        /* =========================
+           SERVICE GRID & FLOATING ANIMATION
+        ===================================================== */
+
+        .services-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .service-item {
+            position: relative;
+            padding: 40px;
+            background: rgba(16, 21, 30, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            overflow: hidden;
+            /* Efek melayang halus bergantian agar hidup */
+            animation: floatCard 6s ease-in-out infinite;
+        }
+
+        .service-item:nth-child(2) { animation-delay: 1.5s; }
+        .service-item:nth-child(3) { animation-delay: 3s; }
+        .service-item:nth-child(4) { animation-delay: 4.5s; }
+
+        @keyframes floatCard {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        /* Garis kilau neon di atas kartu saat hover */
+        .service-item::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00d9ff, transparent);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .service-item:hover {
+            animation-play-state: paused; /* Berhenti melayang saat di-hover */
+            transform: translateY(-12px) scale(1.01);
+            background: rgba(16, 21, 30, 0.85);
+            border-color: rgba(0, 217, 255, 0.4);
+            box-shadow: 0 35px 70px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 217, 255, 0.08);
+        }
+
+        .service-item:hover::before {
+            transform: scaleX(1);
+        }
+
+        /* =========================
+           SERVICE NUMBER & TYPOGRAPHY
+        ===================================================== */
+
+        .service-number {
+            color: #00d9ff;
+            font-family: monospace;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            margin-bottom: 25px;
+            opacity: 0.9;
+        }
+
+        .service-item h2 {
+            font-size: 26px;
+            line-height: 1.25;
+            letter-spacing: -0.5px;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .service-item > p {
+            color: #a0abbc;
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        /* =========================
+           SERVICE FEATURES (ANIMATED ARROW)
+        ===================================================== */
+
+        .service-features {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .service-features li {
+            position: relative;
+            padding-left: 22px;
+            color: #c5cbd3;
+            font-size: 14px;
+            transition: transform 0.3s ease;
+        }
+
+        .service-features li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #00d9ff;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        /* Animasi panah geser ke kanan saat list di-hover */
+        .service-item:hover .service-features li:hover {
+            transform: translateX(5px);
+            color: #fff;
+        }
+
+        .service-item:hover .service-features li:hover::before {
+            transform: translateX(4px);
+        }
+
+        /* =========================
+           PROCESS SECTION WITH PULSE ANIMATION
+        ===================================================== */
+
+        .service-process {
+            margin-top: 110px;
+        }
+
+        .process-title {
+            text-align: center;
+            margin-bottom: 55px;
+        }
+
+        .process-title .small-title {
+            margin-bottom: 15px;
+        }
+
+        .process-title h2 {
+            font-size: clamp(35px, 4vw, 45px);
+            letter-spacing: -1px;
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .process-item {
+            position: relative;
+            padding: 35px 25px;
+            background: rgba(16, 21, 30, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 16px;
+            backdrop-filter: blur(15px);
+            transition: all 0.3s ease;
+        }
+
+        .process-item:hover {
+            border-color: rgba(0, 217, 255, 0.3);
+            transform: translateY(-8px);
+            background: rgba(16, 21, 30, 0.85);
+        }
+
+        .process-number {
+            display: inline-flex;
+            width: 42px;
+            height: 42px;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            background: rgba(0, 217, 255, 0.05);
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            border-radius: 12px;
+            color: #00d9ff;
+            font-size: 14px;
+            font-weight: bold;
+            font-family: monospace;
+            /* Efek berdenyut (pulsa cahaya) */
+            animation: pulseGlow 3s infinite;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(0, 217, 255, 0.2); }
+            50% { box-shadow: 0 0 15px 4px rgba(0, 217, 255, 0.15); }
+        }
+
+        .process-item h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .process-item p {
+            color: #a0abbc;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        /* =========================
+           CTA SECTION WITH MOVING GLOW
+        ===================================================== */
+
+        .services-cta {
+            margin-top: 100px;
+            padding: 70px 40px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(16, 21, 30, 0.8) 0%, rgba(8, 11, 18, 0.9) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .services-cta::before {
+            content: "";
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60%; height: 60%;
+            background: radial-gradient(ellipse, rgba(0, 217, 255, 0.12) 0%, transparent 70%);
+            pointer-events: none;
+            /* Animasi cahaya berputar/membesar pelan */
+            animation: pulseBg 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseBg {
+            0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.6; }
+            100% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+        }
+
+        .services-cta > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .services-cta h2 {
+            font-size: clamp(32px, 4vw, 42px);
+            letter-spacing: -1px;
+            margin-bottom: 15px;
+        }
+
+        .services-cta p {
+            color: #a0abbc;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            font-size: 16px;
+        }
+
+        .services-cta .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .services-cta .btn-primary:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: 0 15px 30px rgba(0, 217, 255, 0.35);
+        }
+
+        /* =========================
+           RESPONSIVE DESIGN
+        ===================================================== */
+
+        @media (max-width: 1024px) {
+            .process-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .services-page { padding: 130px 6% 80px; }
+            .services-list { grid-template-columns: 1fr; }
+            .process-grid { grid-template-columns: 1fr; }
+            
+            .services-intro {
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .services-intro > p:not(.small-title) {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .services-cta { padding: 50px 25px; }
+        }
+    </style>
+    </head>
+
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <header>
+
+        <nav class="navbar">
+
+            <a href="index.html" class="logo">
+                <img src="images/logo.png" alt="N2E Dev">
+            </a>
+
+
+            <ul class="nav-menu" id="navMenu">
+
+                <li>
+                    <a href="index.html">
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a href="services.html">
+                        Layanan
+                    </a>
+                </li>
+
+                <li>
+                    <a href="portfolio.html">
+                        Portfolio
+                    </a>
+                </li>
+
+                <li>
+                    <a href="about.html">
+                        Tentang
+                    </a>
+                </li>
+
+                <li>
+                    <a href="contact.html">
+                        Kontak
+                    </a>
+                </li>
+
+            </ul>
+
+
+            <button
+                class="menu-toggle"
+                id="menuToggle"
+                aria-label="Buka menu">
+
+                <span></span>
+                <span></span>
+                <span></span>
+
+            </button>
+
+        </nav>
+
+    </header>
+
+
+    <!-- =========================
+         SERVICES
+    ========================= -->
+
+    <main>
+
+        <section class="services-page">
+
+            <div class="services-container">
+
+
+                <!-- INTRO -->
+
+                <div class="services-intro">
+
+                    <p class="small-title">
+                        OUR SERVICES
+                    </p>
+
+                    <h1>
+                        Solusi Digital
+                        <span>untuk Kebutuhanmu</span>
+                    </h1>
+
+                    <p>
+                        N2E Dev menyediakan layanan pengembangan
+                        website dan sistem informasi berbasis web
+                        dengan pendekatan yang disesuaikan dengan
+                        kebutuhan setiap project.
+                    </p>
+
+                </div>
+
+
+                <!-- SERVICES -->
+
+                <div class="services-list">
+
+
+                    <!-- SERVICE 01 -->
+
+                    <div class="service-item">
+
+                        <div class="service-number">
+                            01 / WEB DEVELOPMENT
+                        </div>
+
+                        <h2>
+                            Pengembangan Website
+                        </h2>
+
+                        <p>
+                            Membangun website modern, responsif,
+                            dan terstruktur sesuai kebutuhan
+                            project maupun bisnis.
+                        </p>
+
+                        <ul class="service-features">
+
+                            <li>
+                                Website responsive
+                            </li>
+
+                            <li>
+                                Landing page
+                            </li>
+
+                            <li>
+                                Company profile
+                            </li>
+
+                            <li>
+                                Custom website
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+
+                    <!-- SERVICE 02 -->
+
+                    <div class="service-item">
+
+                        <div class="service-number">
+                            02 / INFORMATION SYSTEM
+                        </div>
+
+                        <h2>
+                            Sistem Informasi Berbasis Web
+                        </h2>
+
+                        <p>
+                            Pengembangan sistem informasi berbasis
+                            web untuk membantu pengelolaan data
+                            dan kebutuhan operasional.
+                        </p>
+
+                        <ul class="service-features">
+
+                            <li>
+                                Sistem informasi akademik
+                            </li>
+
+                            <li>
+                                Sistem manajemen data
+                            </li>
+
+                            <li>
+                                Dashboard administrasi
+                            </li>
+
+                            <li>
+                                Custom system
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+
+                    <!-- SERVICE 03 -->
+
+                    <div class="service-item">
+
+                        <div class="service-number">
+                            03 / SYSTEM DESIGN
+                        </div>
+
+                        <h2>
+                            Perancangan Sistem
+                        </h2>
+
+                        <p>
+                            Membantu menyusun konsep dan struktur
+                            sistem sebelum masuk ke tahap
+                            pengembangan.
+                        </p>
+
+                        <ul class="service-features">
+
+                            <li>
+                                Struktur halaman
+                            </li>
+
+                            <li>
+                                Alur sistem
+                            </li>
+
+                            <li>
+                                Perancangan fitur
+                            </li>
+
+                            <li>
+                                User interface
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+
+                    <!-- SERVICE 04 -->
+
+                    <div class="service-item">
+
+                        <div class="service-number">
+                            04 / MAINTENANCE
+                        </div>
+
+                        <h2>
+                            Pengembangan & Maintenance
+                        </h2>
+
+                        <p>
+                            Melakukan pengembangan fitur,
+                            penyempurnaan tampilan, dan perbaikan
+                            sistem agar tetap berjalan dengan baik.
+                        </p>
+
+                        <ul class="service-features">
+
+                            <li>
+                                Penambahan fitur
+                            </li>
+
+                            <li>
+                                Perbaikan sistem
+                            </li>
+
+                            <li>
+                                Optimasi website
+                            </li>
+
+                            <li>
+                                Maintenance
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- PROCESS -->
+
+                <div class="service-process">
+
+                    <div class="process-title">
+
+                        <p class="small-title">
+                            OUR PROCESS
+                        </p>
+
+                        <h2>
+                            Dari Ide Menjadi Website
+                        </h2>
+
+                    </div>
+
+
+                    <div class="process-grid">
+
+
+                        <div class="process-item">
+
+                            <div class="process-number">
+                                01
+                            </div>
+
+                            <h3>
+                                Konsultasi
+                            </h3>
+
+                            <p>
+                                Membahas kebutuhan dan konsep
+                                project yang ingin dikembangkan.
+                            </p>
+
+                        </div>
+
+
+                        <div class="process-item">
+
+                            <div class="process-number">
+                                02
+                            </div>
+
+                            <h3>
+                                Perancangan
+                            </h3>
+
+                            <p>
+                                Menentukan struktur halaman,
+                                fitur, dan alur sistem.
+                            </p>
+
+                        </div>
+
+
+                        <div class="process-item">
+
+                            <div class="process-number">
+                                03
+                            </div>
+
+                            <h3>
+                                Development
+                            </h3>
+
+                            <p>
+                                Mengembangkan website dan fitur
+                                sesuai rancangan yang telah dibuat.
+                            </p>
+
+                        </div>
+
+
+                        <div class="process-item">
+
+                            <div class="process-number">
+                                04
+                            </div>
+
+                            <h3>
+                                Penyempurnaan
+                            </h3>
+
+                            <p>
+                                Melakukan pengecekan dan
+                                penyempurnaan sebelum website
+                                digunakan.
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- CTA -->
+
+                <div class="services-cta">
+
+                    <p class="small-title">
+                        START YOUR PROJECT
+                    </p>
+
+                    <h2>
+                        Punya Ide Website?
+                    </h2>
+
+                    <p>
+                        Diskusikan kebutuhan project kamu
+                        bersama N2E Dev.
+                    </p>
+
+                    <a
+                        href="contact.html"
+                        class="btn-primary">
+
+                        Konsultasi Sekarang
+
+                    </a>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer>
+
+        <div class="footer-logo">
+
+            <img
+                src="images/logo.png"
+                alt="N2E Dev">
+
+        </div>
+
+        <p>
+            © 2026 N2E Dev. All Rights Reserved.
+        </p>
+
+    </footer>
+
+
+    <!-- JAVASCRIPT -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
